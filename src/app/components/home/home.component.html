@@ -5,6 +5,9 @@
   <li *ngFor="let pais of paises"> {{ pais.name }} - {{ pais.population | number }}</li>
 </ul> -->
 
+
+<!-- mode  -->
+
 <app-loading *ngIf="loading"></app-loading>
 
 <div *ngIf="error" class="alert alert-danger">
