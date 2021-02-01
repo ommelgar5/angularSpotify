@@ -35,17 +35,24 @@ export class HomeComponent {
     this.loading  = true;
     this.error = false;
 
-    this.spotify.getNewReleases()
-                .subscribe((responseHttp: any) => {
-                  console.log(responseHttp);
-                  this.nuevasCanciones = responseHttp;
-                  this.loading = false;
-                },
-                (errorService) => {
-                  console.log(errorService);
-                  this.loading = false;
-                  this.error = true;
-                  this.errorMessage = errorService.error.error.message;
+    this.spotify.getToken()
+                .subscribe((token) => {
+                  this.spotify.getNewReleases(token)
+                              .subscribe((responseHttp: any) => {
+                                console.log(responseHttp);
+                                this.nuevasCanciones = responseHttp;
+                                this.loading = false;
+                              },
+                              (errorService) => {
+                                console.log(errorService);
+                                this.loading = false;
+                                this.error = true;
+                                this.errorMessage = errorService.error.error.message;
+                              });
+
                 });
+
    }
 }
+
+

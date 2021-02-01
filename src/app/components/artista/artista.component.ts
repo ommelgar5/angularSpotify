@@ -25,16 +25,17 @@ export class ArtistaComponent  {
 
       this.loading = true;
 
-      this.getArtista(parametros['id']);
-      this.getTopTracks(parametros['id']);
 
-
-
+      this.spotify.getToken()
+                .subscribe((token) => {
+                  this.getTopTracks(parametros['id'],token);
+                  this.getArtista(parametros['id'],token);
+                });
     });
   }
 
-  getArtista(id: string ) {
-    this.spotify.getArtista(id)
+  getArtista(id: string, token: string) {
+    this.spotify.getArtista(id,token)
                 .subscribe((artista) => {
                     this.artista = artista;
                     this.loading = false;
@@ -42,8 +43,8 @@ export class ArtistaComponent  {
                 });
   }
 
-  getTopTracks(id: string) {
-    this.spotify.getTopTracks(id)
+  getTopTracks(id: string, token: string) {
+    this.spotify.getTopTracks(id,token)
                 .subscribe((topTracks) => {
                   this.topTracks = topTracks;
                   console.log(topTracks);

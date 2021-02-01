@@ -21,12 +21,18 @@ export class SearchComponent implements OnInit {
   artista(termino:string){
     this.loading = true;
     console.log(termino);
-    this.spotify.getArtistas(termino)
-                .subscribe((responseHttp: any) => {
-                  console.log(responseHttp);
-                  this.artistas = responseHttp;
-                  this.loading = false;
-                })
+
+    this.spotify.getToken()
+                .subscribe((token) => {
+                  this.spotify.getArtistas(termino, token)
+                              .subscribe((responseHttp: any) => {
+                                console.log(responseHttp);
+                                this.artistas = responseHttp;
+                                this.loading = false;
+                              })
+
+                });
+
   }
 
 }
